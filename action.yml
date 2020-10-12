@@ -1,0 +1,55 @@
+name: 'Trivy Action'
+description: 'Scan docker image vulnerability using Trivy and create GitHub Issue'
+author: 'homoluctus'
+inputs:
+  trivy_version:
+    description: 'Trivy version'
+    default: 'latest'
+    required: false
+  image:
+    description: 'The target image name of vulnerability scan (specify this parameter or "IMAGE_NAME" environment variable'
+    required: false
+  severity:
+    description: 'severities of vulnerabilities (separated by commma)'
+    default: 'HIGH,CRITICAL'
+    required: false
+  vuln_type:
+    description: 'target vlunerability [os,library] (separated by commma)'
+    default: 'os,library'
+    required: false
+  ignore_unfixed:
+    description: 'Ignore unfixed vulnerabilities [true, false]'
+    default: 'false'
+    required: false
+  issue:
+      description: 'Decide whether to create a issue when vulnerabilities are found [true, false]'
+      default: 'true'
+      required: false
+  token:
+    description: 'GitHub access token used to create a issue'
+    required: false
+  issue_title:
+    description: 'Issue title'
+    default: 'Security Alert'
+    required: false
+  issue_label:
+    description: 'Issue label (separated by commma)'
+    default: 'trivy,vulnerability'
+    required: false
+  issue_assignee:
+    description: 'Issue assignee (separated by commma)'
+    required: false
+
+outputs:
+  issue_number:
+    description: 'The created issue number'
+  html_url:
+    description: 'The URL to view the issue'
+
+runs:
+  using: 'node12'
+  main: 'dist/index.js'
+
+branding:
+  icon: 'search'
+  color: 'blue'
